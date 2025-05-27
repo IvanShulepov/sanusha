@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Для Санюши</title>
 
-  <!-- Подключаем шрифт Comfortaa (только вес 600) -->
+  <!-- Шрифт Comfortaa -->
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap" rel="stylesheet">
 
   <style>
@@ -13,11 +13,14 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
       font-family: 'Comfortaa', cursive;
       background: linear-gradient(270deg, #ff9a9e, #fad0c4, #ffdde1);
       background-size: 800% 800%;
       animation: gradient 20s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
 
     @keyframes gradient {
@@ -26,30 +29,48 @@
       100% { background-position: 0% 50%; }
     }
 
+    .envelope, .container {
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
     .envelope {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      padding: 20px;
     }
 
-    .open-btn {
-      margin-top: 30px;
-      padding: 12px 24px;
-      font-size: 1.2em;
-      background-color: #fff;
-      color: #ff69b4;
+    .open-btn, .love-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
       border: none;
       border-radius: 25px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.4);
       transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.4);
+    }
+
+    .open-btn {
+      background-color: #fff;
+      color: #ff69b4;
     }
 
     .open-btn:hover {
       background-color: #ffe6f0;
+    }
+
+    .love-button {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    .love-button:hover {
+      background-color: #ff85c1;
     }
 
     .container {
@@ -57,67 +78,59 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100%;
     }
 
     .pixel-image {
-      max-width: 90vw;
-      max-height: 70vh;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      max-height: 50vh;
       object-fit: contain;
       border-radius: 20px;
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
       transition: transform 0.5s ease;
     }
 
     .pixel-image:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     .phrase {
-      margin-top: 30px;
-      font-size: 2.4em;
+      margin-top: 20px;
+      font-size: 1.5em;
       color: white;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-      /* убираем анимацию fadeIn, добавляем transition */
-      transition: opacity 1s ease;
       opacity: 1;
+      transition: opacity 0.5s ease;
+      min-height: 3em;
     }
 
-    .love-button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 1.2em;
-      background-color: #ff69b4;
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.5);
-      transition: all 0.3s ease;
-    }
+    @media (max-width: 400px) {
+      .phrase {
+        font-size: 1.2em;
+      }
 
-    .love-button:hover {
-      background-color: #ff85c1;
+      .open-btn, .love-button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Приветственная открытка -->
   <div class="envelope" id="envelope">
     <h1 style="color:white;text-shadow:2px 2px 5px rgba(0,0,0,0.5);">💌 Для Санюши...</h1>
-    <p style="color:white;font-size:1.3em;">Нажми ниже, чтобы открыть подарок ❤️</p>
+    <p style="color:white;font-size:1.1em;">Нажми, чтобы открыть подарок ❤️</p>
     <button class="open-btn" onclick="openCard()">Открыть</button>
   </div>
 
-  <!-- Основной контент -->
   <div class="container" id="content">
     <img src="sanusha-pixelart.png" alt="Sanusha Pixel Art" class="pixel-image" />
     <div class="phrase" id="phrase">Ты как тёплый лучик в моей вселенной 💛</div>
     <a href="https://t.me/shulepoff" target="_blank" class="love-button">Я люблю тебя ❤️</a>
   </div>
 
-  <!-- Подключаем конфетти -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
@@ -129,32 +142,24 @@
       "Ты — моя любовь, даже если бы я был героем RPG",
       "Каждый кадр моей жизни — лучше с тобой",
       "Ты — мой уют и моя музыка",
-      "Твой голос - самая лучшая музыка"
+      "Твой голос — самая лучшая музыка"
     ];
 
     function showRandomPhrase() {
       const el = document.getElementById('phrase');
-      const random = Math.floor(Math.random() * phrases.length);
-
-      // Плавно скрываем текст
       el.style.opacity = 0;
-
-      // Через 1 секунду меняем текст и показываем обратно
       setTimeout(() => {
+        const random = Math.floor(Math.random() * phrases.length);
         el.textContent = phrases[random];
         el.style.opacity = 1;
-      }, 1000);
+      }, 500);
     }
 
-    // Меняем фразу каждые 5 секунд
     setInterval(showRandomPhrase, 5000);
 
-    // Открываем открытку
     function openCard() {
       document.getElementById("envelope").style.display = "none";
       document.getElementById("content").style.display = "flex";
-
-      // Конфетти
       confetti({
         particleCount: 150,
         spread: 90,
